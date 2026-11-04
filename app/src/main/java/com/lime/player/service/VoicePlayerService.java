@@ -60,28 +60,44 @@ public class VoicePlayerService extends BasePlayerService {
     protected void onSkip(int skipType) {
         Log.d(TAG, "onSkip type=" + skipType);
         PlaybackCommandBus.dispatchSkip(skipType);
-        if (!PlaybackCommandBus.hasSink()) {
-            main.post(new Runnable() {
-                @Override
-                public void run() {
-                    toast("当前没有正在播放的视频");
-                }
-            });
-        }
+        if (!PlaybackCommandBus.hasSink()) warnNoPlayer();
+
     }
 
     @Override
     protected void onFocusActor(String actorId) {
         Log.d(TAG, "onFocusActor actorId=" + actorId);
         PlaybackCommandBus.dispatchFocusActor(actorId);
-        if (!PlaybackCommandBus.hasSink()) {
-            main.post(new Runnable() {
-                @Override
-                public void run() {
-                    toast("当前没有正在播放的视频");
-                }
-            });
+        if (!PlaybackCommandBus.hasSink()) warnNoPlayer();
+
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume (voice)");
+        PlaybackCommandBus.dispatchResume();
+        if (!PlaybackCommandBus.hasSink()) warnNoPlayer();
+
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause (voice)");
+        PlaybackCommandBus.dispatchPause();
+        if (!PlaybackCommandBus.hasSink()) warnNoPlayer();
+
+    }
+
+    @Override
+    protected void onSetSpeed(final float speed) {
+        Log.d(TAG, "onSetSpeed speed=" + speed);
+        if (speed <= 0f) {
+            toastOnMain("倍速需大于 0");
+            return;
         }
+        PlaybackCommandBus.dispatchSpeed(speed);
+        if (!PlaybackCommandBus.hasSink()) warnNoPlayer();
+
     }
 
     /** 支持：精确 id、文件路径、片名（含模糊）、文件名片段。 */
@@ -155,6 +171,20 @@ public class VoicePlayerService extends BasePlayerService {
         long s = totalSec % 60;
         return String.format(java.util.Locale.US, "（%s%02d:%02d）",
                 h > 0 ? h + ":" : "", m, s);
+    }
+
+    /** 没有播放页时统一提示（服务端只回执，不做其它动作）。 */
+    private void warnNoPlayer() {
+        toastOnMain("当前没有正在播放的视频");
+    }
+
+    private void toastOnMain(final String msg) {
+        main.post(new Runnable() {
+            @Override
+            public void run() {
+                toast(msg);
+            }
+        });
     }
 
     private void toast(final String msg) {

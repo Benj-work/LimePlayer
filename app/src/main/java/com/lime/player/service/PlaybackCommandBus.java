@@ -14,6 +14,15 @@ public final class PlaybackCommandBus {
         void onSkip(int skipType);
 
         void onFocusActor(String actorId);
+
+        /** 继续播放。 */
+        void onVoiceResume();
+
+        /** 暂停播放。 */
+        void onVoicePause();
+
+        /** 设置播放速度，单位倍。 */
+        void onVoiceSetSpeed(float speed);
     }
 
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
@@ -51,6 +60,39 @@ public final class PlaybackCommandBus {
             public void run() {
                 Sink s = sink;
                 if (s != null) s.onFocusActor(actorId);
+            }
+        });
+    }
+
+    public static void dispatchResume() {
+        MAIN.post(new Runnable() {
+            @Override
+            public void run() {
+                Sink s = sink;
+                android.util.Log.d("VoiceBus", "dispatch resume sink=" + (s != null));
+                if (s != null) s.onVoiceResume();
+            }
+        });
+    }
+
+    public static void dispatchPause() {
+        MAIN.post(new Runnable() {
+            @Override
+            public void run() {
+                Sink s = sink;
+                android.util.Log.d("VoiceBus", "dispatch pause sink=" + (s != null));
+                if (s != null) s.onVoicePause();
+            }
+        });
+    }
+
+    public static void dispatchSpeed(final float speed) {
+        MAIN.post(new Runnable() {
+            @Override
+            public void run() {
+                Sink s = sink;
+                android.util.Log.d("VoiceBus", "dispatch speed=" + speed + " sink=" + (s != null));
+                if (s != null) s.onVoiceSetSpeed(speed);
             }
         });
     }

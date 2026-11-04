@@ -286,10 +286,7 @@ public class PlayerActivity extends AppCompatActivity implements PlaybackCommand
                         .setSingleChoiceItems(labels, checked, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                speedIndex = which;
-                                player.setPlaybackSpeed(SPEEDS[which]);
-                                btnSpeed.setText(formatSpeed(SPEEDS[which]));
-                                showHud(formatSpeed(SPEEDS[which]) + " 播放");
+                                applySpeed(SPEEDS[which]);
                                 dialog.dismiss();
                             }
                         })
@@ -622,6 +619,85 @@ public class PlayerActivity extends AppCompatActivity implements PlaybackCommand
         toast(known
                 ? "收到「只看 " + name + "」：缺少演员时间轴，暂不跳转"
                 : "收到「只看 " + name + "」：片源未标注该演员");
+    }
+
+    /** 语音助手：暂停。 */
+    @Override
+    public void onVoicePause() {
+        android.util.Log.d("VoiceBus", "PlayerActivity.onVoicePause player=" + (player != null)
+                + " playing=" + (player != null && player.isPlaying()));
+        if (player == null) return;
+        if (!player.isPlaying()) {
+            toast("当前已是暂停状态");
+        } else {
+            player.pause();
+            toast("已暂停");
+        }
+        android.util.Log.d("VoiceBus", "after pause: isPlaying=" + player.isPlaying()
+                + " pos=" + player.getCurrentPosition());
+        showControls(true);
+    }
+
+    /** 语音助手：继续播放；已播完则从头开始。 */
+    @Override
+    public void onVoiceResume() {
+        android.util.Log.d("VoiceBus", "PlayerActivity.onVoiceResume player=" + (player != null)
+                + " state=" + (player != null ? player.getPlaybackState() : -1));
+        if (player == null) return;
+        if (player.getPlaybackState() == Player.STATE_ENDED) {
+            player.seekTo(0);
+        }
+        if (player.isPlaying()) {
+            toast("正在播放中");
+        } else {
+            player.play();
+            toast("继续播放");
+        }
+        final ExoPlayer p = player;
+        ui.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                android.util.Log.d("VoiceBus", "after resume: isPlaying=" + p.isPlaying()
+                        + " pos=" + p.getCurrentPosition() + " state=" + p.getPlaybackState());
+            }
+        }, 600);
+        showControls(true);
+    }
+
+    /** 语音助手：设置倍速（0.25x ~ 3x，保留两位小数）。 */
+    @Override
+    public void onVoiceSetSpeed(float speed) {
+        android.util.Log.d("VoiceBus", "PlayerActivity.onVoiceSetSpeed speed=" + speed
+                + " player=" + (player != null));
+        if (player == null) return;
+        float applied = applySpeed(speed);
+        android.util.Log.d("VoiceBus", "onVoiceSetSpeed applied=" + applied
+                + " actual=" + player.getPlaybackParameters().speed
+                + " playing=" + player.isPlaying());
+        if (applied > 0f) toast("播放速度 " + speedLabel(applied));
+    }
+
+    /** 统一改速入口：按钮弹窗与语音指令共用，保证按钮文案与 HUD 同步。返回实际生效的倍速。 */
+    private float applySpeed(float speed) {
+        if (player == null) return 0f;
+        float s = Math.max(0.25f, Math.min(3f, speed));
+        s = Math.round(s * 100) / 100f;
+        player.setPlaybackSpeed(s);
+        for (int i = 0; i < SPEEDS.length; i++) {
+            if (Math.abs(SPEEDS[i] - s) < 0.001f) {
+                speedIndex = i;
+                break;
+            }
+        }
+        btnSpeed.setText(formatSpeed(s));
+        showHud(speedLabel(s) + " 播放");
+        return s;
+    }
+
+    /** 倍速文案：1 -> "1x"，1.25 -> "1.25x"（formatSpeed 在 1x 时返回按钮用的「倍速」）。 */
+    private String speedLabel(float s) {
+        String num = s == Math.round(s) ? String.valueOf((int) s) : String.valueOf(s);
+        return num + "x";
     }
 
     private MediaEntry currentEntry() {
