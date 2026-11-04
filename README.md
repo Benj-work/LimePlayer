@@ -45,9 +45,6 @@ LimePlayer/
 │               ├── drawable/                背景、胶囊、遮罩、进度条、矢量图标
 │               ├── color/                   文字选择器
 │               └── values/                  colors / dimens / strings / themes
-├── backdrops/                              详情页横版剧照（*‑fanart.jpg）+ SOURCES.md
-├── screenshots/                            界面截图
-├── tools/                                  构建安装与调试脚本（PowerShell）
 └── README.md
 ```
 
@@ -112,7 +109,3 @@ adb install -r app/app/build/outputs/apk/release/app-release.apk
 adb shell appops set com.lime.player MANAGE_EXTERNAL_STORAGE allow
 adb shell appops set com.lime.player SYSTEM_ALERT_WINDOW allow   # 语音助手从后台拉起播放器需要
 ```
-
-### 脚本
-
-`tools/build-install.ps1` 一次完成构建、安装、授权与启动（脚本内路径按本机目录调整）。

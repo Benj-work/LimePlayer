@@ -22,19 +22,18 @@ local.properties
 *.iml
 .DS_Store
 
-# 工具链与缓存（体积大，各自数百 MB ~ GB）
-tools/jdk/
-tools/dl/
-tools/sdk/
-tools/gradle/
-tools/gh/
+# 以下目录仅在本地保留，不进仓库：
+# tools/       工具链（JDK/SDK/Gradle）与构建、调试脚本
+# gh/          Gradle 用户目录缓存
+# androidhome/ Android 用户目录
+# tmp/         临时文件
+# ref/         调试抓图、反编译中间产物
+# screenshots/ 界面截图
+# backdrops/   详情页剧照素材
+tools/
 gh/
 androidhome/
 tmp/
-
-# 调试临时文件（设备抓图、反编译中间产物等）
 ref/
-
-# 允许 tools 根目录下的脚本进仓库
-!tools/*.ps1
-!tools/*.md
+screenshots/
+backdrops/
