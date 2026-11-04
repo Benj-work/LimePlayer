@@ -1,0 +1,40 @@
+# 构建产物
+build/
+app/build/
+.gradle/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+captures/
+release/
+
+# 临时/备份文件
+*.bak
+*.orig
+*.tmp
+*~
+
+# 本机环境 / IDE
+local.properties
+.idea/
+*.iml
+.DS_Store
+
+# 工具链与缓存（体积大，各自数百 MB ~ GB）
+tools/jdk/
+tools/dl/
+tools/sdk/
+tools/gradle/
+tools/gh/
+gh/
+androidhome/
+tmp/
+
+# 调试临时文件（设备抓图、反编译中间产物等）
+ref/
+
+# 允许 tools 根目录下的脚本进仓库
+!tools/*.ps1
+!tools/*.md

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="page_margin">24dp</dimen>
+    <dimen name="card_gap">16dp</dimen>
+    <dimen name="poster_radius">10dp</dimen>
+    <dimen name="topbar_height">80dp</dimen>
+    <dimen name="tabbar_height">85dp</dimen>
+    <!-- 顶栏胶囊：实测 80px 高、36px 间距、左右内边距 45px -->
+    <dimen name="nav_pill_height">53dp</dimen>
+    <dimen name="nav_pill_padding">38dp</dimen>
+    <dimen name="nav_pill_gap">24dp</dimen>
+</resources>

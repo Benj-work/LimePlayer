@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 取色自设备上爱奇艺首页（1920x1200 实测） -->
+    <color name="bg">#131F30</color>
+    <color name="bg_bar">#202C3C</color>
+    <color name="bg_deep">#0C1520</color>
+    <color name="bg_elev">#1A2739</color>
+    <color name="card">#1A2634</color>
+    <color name="brand">#0BBE06</color>
+    <color name="brand_pressed">#099A05</color>
+    <color name="brand_soft">#1A0BBE06</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#A4A9B0</color>
+    <color name="text_tertiary">#75808F</color>
+    <color name="divider">#1E2B3C</color>
+    <color name="tag_bg">#B3000000</color>
+    <color name="hot">#F94239</color>
+    <color name="gold">#F5C451</color>
+    <color name="transparent">#00000000</color>
+    <color name="white_12">#1FFFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="seek_rest">#4DFFFFFF</color>
+    <!-- 顶栏胶囊底色（爱奇艺导航按钮实测 #343F4D） -->
+    <color name="bg_pill">#343F4D</color>
+</resources>

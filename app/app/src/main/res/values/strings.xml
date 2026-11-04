@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">青柠播放器</string>
+    <string name="brand_name">青柠</string>
+
+    <string name="tab_recommend">推荐</string>
+    <string name="tab_movie">电影</string>
+    <string name="tab_series">剧集</string>
+    <string name="tab_doc">纪录片</string>
+    <string name="tab_all">全部</string>
+    <string name="nav_search">搜索</string>
+    <string name="nav_history">历史</string>
+    <string name="nav_settings">设置</string>
+    <string name="filter">筛选</string>
+
+    <string name="play">播放</string>
+    <string name="resume">继续观看</string>
+    <string name="empty_title">片库还是空的</string>
+    <string name="empty_desc">把视频放到 /sdcard/ExoPlayerLibrary/ 后点“重新扫描”，同名 .nfo 与 .jpg 会自动识别为信息和海报。</string>
+    <string name="rescan">重新扫描</string>
+
+    <string name="detail_plot">剧情简介</string>
+    <string name="detail_cast">演职人员</string>
+    <string name="detail_episodes">选集</string>
+    <string name="detail_play_all">播放全部</string>
+
+    <string name="quality">超清</string>
+</resources>
